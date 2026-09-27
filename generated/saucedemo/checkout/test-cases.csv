@@ -1,0 +1,72 @@
+"ID","Title","Module","Type","Priority","Technique","Preconditions","Steps","Expected Result","Tags","Automation Status"
+"TC-CHECKOUT-001","Complete a purchase end to end","checkout","e2e","P0","Use-case testing","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""
+5. Enter ""Ada"" in [firstName]
+6. Enter ""Lovelace"" in [lastName]
+7. Enter ""98101"" in [postalCode]
+8. Click [continue] => The URL contains ""/checkout-step-two.html""
+9. Click [finish] => The URL contains ""/checkout-complete.html""; [complete-header] reads ""Thank you for your order!""; [shopping-cart-badge] is not displayed","Order confirmation is shown and the cart badge is cleared.","smoke, checkout","not-validated"
+"TC-CHECKOUT-002","Require first name","checkout","negative","P1","Equivalence partitioning (empty input)","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""
+5. Enter ""Lovelace"" in [lastName]
+6. Enter ""98101"" in [postalCode]
+7. Click [continue] => [error] contains ""First Name is required""; The URL contains ""/checkout-step-one.html""","Error 'Error: First Name is required'; user stays on step one.","validation","not-validated"
+"TC-CHECKOUT-003","Require last name","checkout","negative","P1","Equivalence partitioning (empty input)","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""
+5. Enter ""Ada"" in [firstName]
+6. Enter ""98101"" in [postalCode]
+7. Click [continue] => [error] contains ""Last Name is required""","Error 'Error: Last Name is required'.","validation","not-validated"
+"TC-CHECKOUT-004","Require postal code","checkout","negative","P1","Equivalence partitioning (empty input)","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""
+5. Enter ""Ada"" in [firstName]
+6. Enter ""Lovelace"" in [lastName]
+7. Click [continue] => [error] contains ""Postal Code is required""","Error 'Error: Postal Code is required'.","validation","not-validated"
+"TC-CHECKOUT-005","Overview shows correct item total, tax and total","checkout","functional","P0","Equivalence partitioning","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""
+5. Enter ""Ada"" in [firstName]
+6. Enter ""Lovelace"" in [lastName]
+7. Enter ""98101"" in [postalCode]
+8. Click [continue] => [subtotal-label] contains ""Item total: $29.99""; [tax-label] contains ""Tax: $2.40""; [total-label] contains ""Total: $32.39""","Item total $29.99, tax $2.40, total $32.39.","pricing","not-validated"
+"TC-CHECKOUT-006","Overview totals for two items","checkout","boundary","P1","Boundary value analysis (1 → many items)","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [add-to-cart-sauce-labs-bike-light]
+4. Click [shopping-cart-link]
+5. Click [checkout]
+6. Enter ""Ada"" in [firstName]
+7. Enter ""Lovelace"" in [lastName]
+8. Enter ""98101"" in [postalCode]
+9. Click [continue] => 2 × [inventory-item] are shown; [subtotal-label] contains ""Item total: $39.98""; [tax-label] contains ""Tax: $3.20""; [total-label] contains ""Total: $43.18""","Item total $39.98, tax $3.20, total $43.18.","pricing","not-validated"
+"TC-CHECKOUT-007","Cancel on customer information returns to cart","checkout","state-transition","P2","State transition","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""
+5. Click [cancel] => The URL contains ""/cart.html""; 1 × [inventory-item] are shown","User is back on the cart with the item still present.","navigation","not-validated"
+"TC-CHECKOUT-008","Cancel on overview returns to inventory without ordering","checkout","state-transition","P2","State transition","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""
+5. Enter ""Ada"" in [firstName]
+6. Enter ""Lovelace"" in [lastName]
+7. Enter ""98101"" in [postalCode]
+8. Click [continue]
+9. Click [cancel] => The URL contains ""/inventory.html""; [shopping-cart-badge] reads ""1""","Inventory is shown and the cart still holds 1 item.","navigation","not-validated"
+"TC-CHECKOUT-009","Back Home after order returns to inventory","checkout","functional","P3","Use-case testing","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""
+5. Enter ""Ada"" in [firstName]
+6. Enter ""Lovelace"" in [lastName]
+7. Enter ""98101"" in [postalCode]
+8. Click [continue]
+9. Click [finish]
+10. Click [back-to-products] => The URL contains ""/inventory.html""","User returns to the inventory.","navigation","not-validated"

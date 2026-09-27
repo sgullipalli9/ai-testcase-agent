@@ -1,0 +1,786 @@
+{
+  "site": "saucedemo",
+  "module": "checkout",
+  "generatedAt": "2026-09-26T00:00:00.000Z",
+  "generator": {
+    "model": "reference test design (not machine-validated)",
+    "provider": "reference"
+  },
+  "coverageSummary": "Required-field validation for each customer field, overview totals (item total, 8% tax, total), cancel paths from both steps, and successful order completion that empties the cart. Not covered: payment/shipping information is static in this app; error_user checkout defects belong to a negative-persona suite.",
+  "testCases": [
+    {
+      "id": "TC-CHECKOUT-001",
+      "title": "Complete a purchase end to end",
+      "objective": "Core purchase flow works.",
+      "type": "e2e",
+      "priority": "P0",
+      "technique": "Use-case testing",
+      "tags": [
+        "smoke",
+        "checkout"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "firstName"
+          },
+          "value": "Ada"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "lastName"
+          },
+          "value": "Lovelace"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "postalCode"
+          },
+          "value": "98101"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-two.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "finish"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-complete.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "complete-header"
+          },
+          "text": "Thank you for your order!",
+          "exact": true
+        },
+        {
+          "action": "expectHidden",
+          "target": {
+            "testId": "shopping-cart-badge"
+          }
+        }
+      ],
+      "expectedResult": "Order confirmation is shown and the cart badge is cleared.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CHECKOUT-002",
+      "title": "Require first name",
+      "objective": "Required-field validation (first name).",
+      "type": "negative",
+      "priority": "P1",
+      "technique": "Equivalence partitioning (empty input)",
+      "tags": [
+        "validation"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "lastName"
+          },
+          "value": "Lovelace"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "postalCode"
+          },
+          "value": "98101"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "First Name is required"
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        }
+      ],
+      "expectedResult": "Error 'Error: First Name is required'; user stays on step one.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CHECKOUT-003",
+      "title": "Require last name",
+      "objective": "Required-field validation (last name).",
+      "type": "negative",
+      "priority": "P1",
+      "technique": "Equivalence partitioning (empty input)",
+      "tags": [
+        "validation"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "firstName"
+          },
+          "value": "Ada"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "postalCode"
+          },
+          "value": "98101"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "Last Name is required"
+        }
+      ],
+      "expectedResult": "Error 'Error: Last Name is required'.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CHECKOUT-004",
+      "title": "Require postal code",
+      "objective": "Required-field validation (postal code).",
+      "type": "negative",
+      "priority": "P1",
+      "technique": "Equivalence partitioning (empty input)",
+      "tags": [
+        "validation"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "firstName"
+          },
+          "value": "Ada"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "lastName"
+          },
+          "value": "Lovelace"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "Postal Code is required"
+        }
+      ],
+      "expectedResult": "Error 'Error: Postal Code is required'.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CHECKOUT-005",
+      "title": "Overview shows correct item total, tax and total",
+      "objective": "Order maths are correct (8% tax).",
+      "type": "functional",
+      "priority": "P0",
+      "technique": "Equivalence partitioning",
+      "tags": [
+        "pricing"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "firstName"
+          },
+          "value": "Ada"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "lastName"
+          },
+          "value": "Lovelace"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "postalCode"
+          },
+          "value": "98101"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "subtotal-label"
+          },
+          "text": "Item total: $29.99"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "tax-label"
+          },
+          "text": "Tax: $2.40"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "total-label"
+          },
+          "text": "Total: $32.39"
+        }
+      ],
+      "expectedResult": "Item total $29.99, tax $2.40, total $32.39.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CHECKOUT-006",
+      "title": "Overview totals for two items",
+      "objective": "Totals aggregate multiple items.",
+      "type": "boundary",
+      "priority": "P1",
+      "technique": "Boundary value analysis (1 → many items)",
+      "tags": [
+        "pricing"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-bike-light"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "firstName"
+          },
+          "value": "Ada"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "lastName"
+          },
+          "value": "Lovelace"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "postalCode"
+          },
+          "value": "98101"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue"
+          }
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item"
+          },
+          "count": 2
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "subtotal-label"
+          },
+          "text": "Item total: $39.98"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "tax-label"
+          },
+          "text": "Tax: $3.20"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "total-label"
+          },
+          "text": "Total: $43.18"
+        }
+      ],
+      "expectedResult": "Item total $39.98, tax $3.20, total $43.18.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CHECKOUT-007",
+      "title": "Cancel on customer information returns to cart",
+      "objective": "Cancel path from step one keeps the cart.",
+      "type": "state-transition",
+      "priority": "P2",
+      "technique": "State transition",
+      "tags": [
+        "navigation"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "cancel"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/cart.html"
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item"
+          },
+          "count": 1
+        }
+      ],
+      "expectedResult": "User is back on the cart with the item still present.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CHECKOUT-008",
+      "title": "Cancel on overview returns to inventory without ordering",
+      "objective": "Cancel path from step two does not place the order.",
+      "type": "state-transition",
+      "priority": "P2",
+      "technique": "State transition",
+      "tags": [
+        "navigation"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "firstName"
+          },
+          "value": "Ada"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "lastName"
+          },
+          "value": "Lovelace"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "postalCode"
+          },
+          "value": "98101"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "cancel"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/inventory.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "shopping-cart-badge"
+          },
+          "text": "1",
+          "exact": true
+        }
+      ],
+      "expectedResult": "Inventory is shown and the cart still holds 1 item.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CHECKOUT-009",
+      "title": "Back Home after order returns to inventory",
+      "objective": "Post-purchase navigation.",
+      "type": "functional",
+      "priority": "P3",
+      "technique": "Use-case testing",
+      "tags": [
+        "navigation"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "firstName"
+          },
+          "value": "Ada"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "lastName"
+          },
+          "value": "Lovelace"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "postalCode"
+          },
+          "value": "98101"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "finish"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "back-to-products"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/inventory.html"
+        }
+      ],
+      "expectedResult": "User returns to the inventory.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    }
+  ]
+}

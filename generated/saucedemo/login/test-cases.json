@@ -1,0 +1,466 @@
+{
+  "site": "saucedemo",
+  "module": "login",
+  "generatedAt": "2026-09-26T00:00:00.000Z",
+  "generator": {
+    "model": "reference test design (not machine-validated)",
+    "provider": "reference"
+  },
+  "coverageSummary": "Happy path, required-field validation (username, password, both), invalid and locked-out credentials, dismissible error banner, protected-route access without a session, and logout. Not covered: performance_glitch_user latency SLAs (belongs in a performance suite) and visual_user rendering differences (visual regression).",
+  "testCases": [
+    {
+      "id": "TC-LOGIN-001",
+      "title": "Sign in as standard_user",
+      "objective": "Core happy path reaches the inventory.",
+      "type": "functional",
+      "priority": "P0",
+      "technique": "Equivalence partitioning (valid class)",
+      "tags": [
+        "smoke",
+        "auth"
+      ],
+      "preconditions": [
+        "Account standard_user exists"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "username"
+          },
+          "value": "standard_user"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "password"
+          },
+          "value": "secret_sauce"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/inventory.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "title"
+          },
+          "text": "Products",
+          "exact": true
+        },
+        {
+          "action": "expectVisible",
+          "target": {
+            "testId": "inventory-list"
+          }
+        }
+      ],
+      "expectedResult": "User lands on /inventory.html and the Products list is visible.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-LOGIN-002",
+      "title": "Reject sign-in with empty username",
+      "objective": "Required-field validation for username.",
+      "type": "negative",
+      "priority": "P1",
+      "technique": "Equivalence partitioning (empty input)",
+      "tags": [
+        "validation"
+      ],
+      "preconditions": [],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "password"
+          },
+          "value": "secret_sauce"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "Username is required"
+        }
+      ],
+      "expectedResult": "Error 'Epic sadface: Username is required' is shown.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-LOGIN-003",
+      "title": "Reject sign-in with empty password",
+      "objective": "Required-field validation for password.",
+      "type": "negative",
+      "priority": "P1",
+      "technique": "Equivalence partitioning (empty input)",
+      "tags": [
+        "validation"
+      ],
+      "preconditions": [],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "username"
+          },
+          "value": "standard_user"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "Password is required"
+        }
+      ],
+      "expectedResult": "Error 'Epic sadface: Password is required' is shown.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-LOGIN-004",
+      "title": "Username rule wins when both fields are empty",
+      "objective": "Validation order is deterministic when several fields are invalid.",
+      "type": "boundary",
+      "priority": "P3",
+      "technique": "Decision table",
+      "tags": [
+        "validation"
+      ],
+      "preconditions": [],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "Username is required"
+        }
+      ],
+      "expectedResult": "Only the username error is shown.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-LOGIN-005",
+      "title": "Reject sign-in with a wrong password",
+      "objective": "Invalid credentials must not authenticate; message must not reveal which field is wrong.",
+      "type": "negative",
+      "priority": "P0",
+      "technique": "Equivalence partitioning (invalid class)",
+      "tags": [
+        "auth",
+        "security"
+      ],
+      "preconditions": [],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "username"
+          },
+          "value": "standard_user"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "password"
+          },
+          "value": "wrong_password"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "Username and password do not match any user in this service"
+        },
+        {
+          "action": "expectVisible",
+          "target": {
+            "testId": "login-button"
+          }
+        }
+      ],
+      "expectedResult": "Generic credentials error; user remains on the login page.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-LOGIN-006",
+      "title": "Block sign-in for locked_out_user",
+      "objective": "Locked accounts are refused with a specific message.",
+      "type": "negative",
+      "priority": "P0",
+      "technique": "Equivalence partitioning (locked class)",
+      "tags": [
+        "auth"
+      ],
+      "preconditions": [
+        "Account locked_out_user is locked"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "username"
+          },
+          "value": "locked_out_user"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "password"
+          },
+          "value": "secret_sauce"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "Sorry, this user has been locked out."
+        }
+      ],
+      "expectedResult": "Error 'Epic sadface: Sorry, this user has been locked out.' is shown.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-LOGIN-007",
+      "title": "Dismiss the login error banner",
+      "objective": "Users can clear an error before retrying.",
+      "type": "ui",
+      "priority": "P3",
+      "technique": "Error guessing",
+      "tags": [
+        "ui"
+      ],
+      "preconditions": [],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "expectVisible",
+          "target": {
+            "testId": "error"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "error-button"
+          }
+        },
+        {
+          "action": "expectHidden",
+          "target": {
+            "testId": "error"
+          }
+        }
+      ],
+      "expectedResult": "Error banner disappears after clicking its close button.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-LOGIN-008",
+      "title": "Block direct access to inventory without a session",
+      "objective": "Protected pages require authentication.",
+      "type": "security",
+      "priority": "P0",
+      "technique": "State transition (anonymous → protected page)",
+      "tags": [
+        "auth",
+        "routing"
+      ],
+      "preconditions": [
+        "No active session"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "error"
+          },
+          "text": "You can only access '/inventory.html' when you are logged in"
+        }
+      ],
+      "expectedResult": "User is shown the login page with an access error.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-LOGIN-009",
+      "title": "Logout ends the session",
+      "objective": "After logout, protected pages are no longer reachable.",
+      "type": "state-transition",
+      "priority": "P1",
+      "technique": "State transition (authenticated → logged out)",
+      "tags": [
+        "auth",
+        "session"
+      ],
+      "preconditions": [
+        "Account standard_user exists"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "username"
+          },
+          "value": "standard_user"
+        },
+        {
+          "action": "fill",
+          "target": {
+            "testId": "password"
+          },
+          "value": "secret_sauce"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "role": "button",
+            "name": "Open Menu"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "logout-sidebar-link"
+          }
+        },
+        {
+          "action": "expectVisible",
+          "target": {
+            "testId": "login-button"
+          }
+        },
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "expectVisible",
+          "target": {
+            "testId": "error"
+          }
+        }
+      ],
+      "expectedResult": "User returns to login; revisiting /inventory.html shows the access error.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    }
+  ]
+}

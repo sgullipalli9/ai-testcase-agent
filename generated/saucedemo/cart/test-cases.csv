@@ -1,0 +1,22 @@
+"ID","Title","Module","Type","Priority","Technique","Preconditions","Steps","Expected Result","Tags","Automation Status"
+"TC-CART-001","Cart lists an added product with quantity and price","cart","functional","P0","Use-case testing","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link] => The URL contains ""/cart.html""; [title] reads ""Your Cart""; 1 × [inventory-item] are shown; [inventory-item-name] reads ""Sauce Labs Backpack""; [item-quantity] reads ""1""; [inventory-item-price] reads ""$29.99""","Cart shows 1 × Sauce Labs Backpack at $29.99.","smoke, cart","not-validated"
+"TC-CART-002","Remove an item from the cart","cart","functional","P1","State transition (1 item → empty)","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [remove-sauce-labs-backpack] => 0 × [inventory-item] are shown; [shopping-cart-badge] is not displayed","Item disappears and the badge is cleared.","cart","not-validated"
+"TC-CART-003","Empty cart shows no items","cart","boundary","P2","Boundary value analysis (0 items)","Logged in as standard_user
+Cart is empty","1. Open /cart.html => [title] reads ""Your Cart""; 0 × [inventory-item] are shown; [checkout] is visible","No items listed; page still renders its actions.","cart","not-validated"
+"TC-CART-004","Continue shopping returns to the inventory","cart","functional","P2","Use-case testing","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [continue-shopping] => The URL contains ""/inventory.html""; [shopping-cart-badge] reads ""1""","Inventory is shown and the badge still shows 1.","navigation","not-validated"
+"TC-CART-005","Checkout button opens customer information step","cart","functional","P0","State transition","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [shopping-cart-link]
+4. Click [checkout] => The URL contains ""/checkout-step-one.html""; [title] reads ""Checkout: Your Information""","Checkout step one is displayed.","checkout, smoke","not-validated"
+"TC-CART-006","Cart keeps multiple items in order of addition","cart","functional","P2","Equivalence partitioning (many items)","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-bike-light]
+3. Click [add-to-cart-sauce-labs-backpack]
+4. Click [shopping-cart-link] => 2 × [inventory-item] are shown; [inventory-item-name] #1 reads ""Sauce Labs Bike Light""","Both items are listed, bike light first.","cart","not-validated"

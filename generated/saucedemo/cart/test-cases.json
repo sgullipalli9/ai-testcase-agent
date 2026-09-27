@@ -1,0 +1,366 @@
+{
+  "site": "saucedemo",
+  "module": "cart",
+  "generatedAt": "2026-09-26T00:00:00.000Z",
+  "generator": {
+    "model": "reference test design (not machine-validated)",
+    "provider": "reference"
+  },
+  "coverageSummary": "Cart contents (name, quantity, price), removing items, empty-cart state, continue shopping, and entry to checkout. Not covered: quantity editing (not supported by the app), cart persistence across devices.",
+  "testCases": [
+    {
+      "id": "TC-CART-001",
+      "title": "Cart lists an added product with quantity and price",
+      "objective": "Cart reflects what was added.",
+      "type": "functional",
+      "priority": "P0",
+      "technique": "Use-case testing",
+      "tags": [
+        "smoke",
+        "cart"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/cart.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "title"
+          },
+          "text": "Your Cart",
+          "exact": true
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item"
+          },
+          "count": 1
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "inventory-item-name"
+          },
+          "text": "Sauce Labs Backpack",
+          "exact": true
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "item-quantity"
+          },
+          "text": "1",
+          "exact": true
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "inventory-item-price"
+          },
+          "text": "$29.99",
+          "exact": true
+        }
+      ],
+      "expectedResult": "Cart shows 1 × Sauce Labs Backpack at $29.99.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CART-002",
+      "title": "Remove an item from the cart",
+      "objective": "Items can be removed on the cart page.",
+      "type": "functional",
+      "priority": "P1",
+      "technique": "State transition (1 item → empty)",
+      "tags": [
+        "cart"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "remove-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item"
+          },
+          "count": 0
+        },
+        {
+          "action": "expectHidden",
+          "target": {
+            "testId": "shopping-cart-badge"
+          }
+        }
+      ],
+      "expectedResult": "Item disappears and the badge is cleared.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CART-003",
+      "title": "Empty cart shows no items",
+      "objective": "Empty state is handled.",
+      "type": "boundary",
+      "priority": "P2",
+      "technique": "Boundary value analysis (0 items)",
+      "tags": [
+        "cart"
+      ],
+      "preconditions": [
+        "Logged in as standard_user",
+        "Cart is empty"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/cart.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "title"
+          },
+          "text": "Your Cart",
+          "exact": true
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item"
+          },
+          "count": 0
+        },
+        {
+          "action": "expectVisible",
+          "target": {
+            "testId": "checkout"
+          }
+        }
+      ],
+      "expectedResult": "No items listed; page still renders its actions.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CART-004",
+      "title": "Continue shopping returns to the inventory",
+      "objective": "Navigation back to catalogue keeps the cart.",
+      "type": "functional",
+      "priority": "P2",
+      "technique": "Use-case testing",
+      "tags": [
+        "navigation"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "continue-shopping"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/inventory.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "shopping-cart-badge"
+          },
+          "text": "1",
+          "exact": true
+        }
+      ],
+      "expectedResult": "Inventory is shown and the badge still shows 1.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CART-005",
+      "title": "Checkout button opens customer information step",
+      "objective": "Cart → checkout transition.",
+      "type": "functional",
+      "priority": "P0",
+      "technique": "State transition",
+      "tags": [
+        "checkout",
+        "smoke"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "checkout"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/checkout-step-one.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "title"
+          },
+          "text": "Checkout: Your Information",
+          "exact": true
+        }
+      ],
+      "expectedResult": "Checkout step one is displayed.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-CART-006",
+      "title": "Cart keeps multiple items in order of addition",
+      "objective": "Multiple distinct items are all listed.",
+      "type": "functional",
+      "priority": "P2",
+      "technique": "Equivalence partitioning (many items)",
+      "tags": [
+        "cart"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-bike-light"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "shopping-cart-link"
+          }
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item"
+          },
+          "count": 2
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "inventory-item-name",
+            "nth": 0
+          },
+          "text": "Sauce Labs Bike Light",
+          "exact": true
+        }
+      ],
+      "expectedResult": "Both items are listed, bike light first.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    }
+  ]
+}

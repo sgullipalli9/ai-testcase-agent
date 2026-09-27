@@ -1,0 +1,32 @@
+"ID","Title","Module","Type","Priority","Technique","Preconditions","Steps","Expected Result","Tags","Automation Status"
+"TC-LOGIN-001","Sign in as standard_user","login","functional","P0","Equivalence partitioning (valid class)","Account standard_user exists","1. Open /
+2. Enter ""standard_user"" in [username]
+3. Enter ""secret_sauce"" in [password]
+4. Click [login-button] => The URL contains ""/inventory.html""; [title] reads ""Products""; [inventory-list] is visible","User lands on /inventory.html and the Products list is visible.","smoke, auth","not-validated"
+"TC-LOGIN-002","Reject sign-in with empty username","login","negative","P1","Equivalence partitioning (empty input)","","1. Open /
+2. Enter ""secret_sauce"" in [password]
+3. Click [login-button] => [error] contains ""Username is required""","Error 'Epic sadface: Username is required' is shown.","validation","not-validated"
+"TC-LOGIN-003","Reject sign-in with empty password","login","negative","P1","Equivalence partitioning (empty input)","","1. Open /
+2. Enter ""standard_user"" in [username]
+3. Click [login-button] => [error] contains ""Password is required""","Error 'Epic sadface: Password is required' is shown.","validation","not-validated"
+"TC-LOGIN-004","Username rule wins when both fields are empty","login","boundary","P3","Decision table","","1. Open /
+2. Click [login-button] => [error] contains ""Username is required""","Only the username error is shown.","validation","not-validated"
+"TC-LOGIN-005","Reject sign-in with a wrong password","login","negative","P0","Equivalence partitioning (invalid class)","","1. Open /
+2. Enter ""standard_user"" in [username]
+3. Enter ""wrong_password"" in [password]
+4. Click [login-button] => [error] contains ""Username and password do not match any user in this service""; [login-button] is visible","Generic credentials error; user remains on the login page.","auth, security","not-validated"
+"TC-LOGIN-006","Block sign-in for locked_out_user","login","negative","P0","Equivalence partitioning (locked class)","Account locked_out_user is locked","1. Open /
+2. Enter ""locked_out_user"" in [username]
+3. Enter ""secret_sauce"" in [password]
+4. Click [login-button] => [error] contains ""Sorry, this user has been locked out.""","Error 'Epic sadface: Sorry, this user has been locked out.' is shown.","auth","not-validated"
+"TC-LOGIN-007","Dismiss the login error banner","login","ui","P3","Error guessing","","1. Open /
+2. Click [login-button] => [error] is visible
+3. Click [error-button] => [error] is not displayed","Error banner disappears after clicking its close button.","ui","not-validated"
+"TC-LOGIN-008","Block direct access to inventory without a session","login","security","P0","State transition (anonymous → protected page)","No active session","1. Open /inventory.html => [error] contains ""You can only access '/inventory.html' when you are logged in""","User is shown the login page with an access error.","auth, routing","not-validated"
+"TC-LOGIN-009","Logout ends the session","login","state-transition","P1","State transition (authenticated → logged out)","Account standard_user exists","1. Open /
+2. Enter ""standard_user"" in [username]
+3. Enter ""secret_sauce"" in [password]
+4. Click [login-button] => The URL contains ""/inventory.html""
+5. Click the ""Open Menu"" button
+6. Click [logout-sidebar-link] => [login-button] is visible
+7. Open /inventory.html => [error] is visible","User returns to login; revisiting /inventory.html shows the access error.","auth, session","not-validated"

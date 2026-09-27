@@ -1,0 +1,22 @@
+"ID","Title","Module","Type","Priority","Technique","Preconditions","Steps","Expected Result","Tags","Automation Status"
+"TC-INVENTORY-001","Show all six products with name and price","inventory","functional","P0","Equivalence partitioning","Logged in as standard_user","1. Open /inventory.html => 6 × [inventory-item] are shown; 6 × [inventory-item-name] are shown; 6 × [inventory-item-price] are shown","6 products are listed, each with a name and price.","smoke, catalogue","not-validated"
+"TC-INVENTORY-002","Default sort is Name (A to Z)","inventory","functional","P2","Equivalence partitioning","Logged in as standard_user","1. Open /inventory.html => [product-sort-container] has value ""az""; [inventory-item-name] are sorted by name (ascending)","Products are in alphabetical order.","sorting","not-validated"
+"TC-INVENTORY-003","Sort by Name (Z to A)","inventory","functional","P2","Equivalence partitioning (each sort option)","Logged in as standard_user","1. Open /inventory.html
+2. Select ""za"" in [product-sort-container] => [inventory-item-name] are sorted by name (descending); [inventory-item-name] #1 reads ""Test.allTheThings() T-Shirt (Red)""","First product is 'Test.allTheThings() T-Shirt (Red)'; list is reverse-alphabetical.","sorting","not-validated"
+"TC-INVENTORY-004","Sort by Price (low to high)","inventory","functional","P1","Equivalence partitioning (each sort option)","Logged in as standard_user","1. Open /inventory.html
+2. Select ""lohi"" in [product-sort-container] => [inventory-item-price] are sorted by value (ascending); [inventory-item-price] #1 reads ""$7.99""","Cheapest item ($7.99) first; prices ascend.","sorting","not-validated"
+"TC-INVENTORY-005","Sort by Price (high to low)","inventory","boundary","P1","Boundary value analysis ($9.99 vs $49.99)","Logged in as standard_user","1. Open /inventory.html
+2. Select ""hilo"" in [product-sort-container] => [inventory-item-price] are sorted by value (descending); [inventory-item-price] #1 reads ""$49.99""","Most expensive item ($49.99) first; prices descend.","sorting","not-validated"
+"TC-INVENTORY-006","Add a product updates the cart badge","inventory","functional","P0","State transition (empty → 1 item)","Logged in as standard_user
+Cart is empty","1. Open /inventory.html => [shopping-cart-badge] is not displayed
+2. Click [add-to-cart-sauce-labs-backpack] => [shopping-cart-badge] reads ""1""; [remove-sauce-labs-backpack] is visible","Badge shows 1; button switches to Remove.","cart, smoke","not-validated"
+"TC-INVENTORY-007","Remove a product clears the cart badge","inventory","state-transition","P1","State transition (1 item → empty)","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [remove-sauce-labs-backpack] => [shopping-cart-badge] is not displayed; [add-to-cart-sauce-labs-backpack] is visible","Badge disappears; button reverts to Add to cart.","cart","not-validated"
+"TC-INVENTORY-008","Badge counts multiple products","inventory","functional","P2","Equivalence partitioning (many items)","Logged in as standard_user","1. Open /inventory.html
+2. Click [add-to-cart-sauce-labs-backpack]
+3. Click [add-to-cart-sauce-labs-bike-light]
+4. Click [add-to-cart-sauce-labs-onesie] => [shopping-cart-badge] reads ""3""","Badge shows 3.","cart","not-validated"
+"TC-INVENTORY-009","Open product details and go back","inventory","functional","P1","Use-case testing","Logged in as standard_user","1. Open /inventory.html
+2. Click ""Sauce Labs Backpack"" => The URL contains ""/inventory-item.html""; [inventory-item-name] reads ""Sauce Labs Backpack""; [inventory-item-price] contains ""$29.99""
+3. Click [back-to-products] => The URL contains ""/inventory.html""","Detail page shows the backpack at $29.99; Back returns to the list.","navigation","not-validated"

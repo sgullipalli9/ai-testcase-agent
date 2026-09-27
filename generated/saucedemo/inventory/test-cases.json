@@ -1,0 +1,460 @@
+{
+  "site": "saucedemo",
+  "module": "inventory",
+  "generatedAt": "2026-09-26T00:00:00.000Z",
+  "generator": {
+    "model": "reference test design (not machine-validated)",
+    "provider": "reference"
+  },
+  "coverageSummary": "Catalogue rendering, all four sort options (numeric vs text ordering), add/remove updating the cart badge, multiple items, product detail navigation and back. Not covered: problem_user/error_user seeded defects (candidates for a dedicated negative-persona suite), image assets, responsive layout.",
+  "testCases": [
+    {
+      "id": "TC-INVENTORY-001",
+      "title": "Show all six products with name and price",
+      "objective": "Catalogue renders completely.",
+      "type": "functional",
+      "priority": "P0",
+      "technique": "Equivalence partitioning",
+      "tags": [
+        "smoke",
+        "catalogue"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item"
+          },
+          "count": 6
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item-name"
+          },
+          "count": 6
+        },
+        {
+          "action": "expectCount",
+          "target": {
+            "testId": "inventory-item-price"
+          },
+          "count": 6
+        }
+      ],
+      "expectedResult": "6 products are listed, each with a name and price.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-INVENTORY-002",
+      "title": "Default sort is Name (A to Z)",
+      "objective": "Default ordering is predictable.",
+      "type": "functional",
+      "priority": "P2",
+      "technique": "Equivalence partitioning",
+      "tags": [
+        "sorting"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "expectValue",
+          "target": {
+            "testId": "product-sort-container"
+          },
+          "value": "az"
+        },
+        {
+          "action": "expectSorted",
+          "target": {
+            "testId": "inventory-item-name"
+          },
+          "order": "asc",
+          "by": "text"
+        }
+      ],
+      "expectedResult": "Products are in alphabetical order.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-INVENTORY-003",
+      "title": "Sort by Name (Z to A)",
+      "objective": "Descending name sort.",
+      "type": "functional",
+      "priority": "P2",
+      "technique": "Equivalence partitioning (each sort option)",
+      "tags": [
+        "sorting"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "select",
+          "target": {
+            "testId": "product-sort-container"
+          },
+          "value": "za"
+        },
+        {
+          "action": "expectSorted",
+          "target": {
+            "testId": "inventory-item-name"
+          },
+          "order": "desc",
+          "by": "text"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "inventory-item-name",
+            "nth": 0
+          },
+          "text": "Test.allTheThings() T-Shirt (Red)",
+          "exact": true
+        }
+      ],
+      "expectedResult": "First product is 'Test.allTheThings() T-Shirt (Red)'; list is reverse-alphabetical.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-INVENTORY-004",
+      "title": "Sort by Price (low to high)",
+      "objective": "Numeric ascending price sort.",
+      "type": "functional",
+      "priority": "P1",
+      "technique": "Equivalence partitioning (each sort option)",
+      "tags": [
+        "sorting"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "select",
+          "target": {
+            "testId": "product-sort-container"
+          },
+          "value": "lohi"
+        },
+        {
+          "action": "expectSorted",
+          "target": {
+            "testId": "inventory-item-price"
+          },
+          "order": "asc",
+          "by": "number"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "inventory-item-price",
+            "nth": 0
+          },
+          "text": "$7.99",
+          "exact": true
+        }
+      ],
+      "expectedResult": "Cheapest item ($7.99) first; prices ascend.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-INVENTORY-005",
+      "title": "Sort by Price (high to low)",
+      "objective": "Numeric descending price sort; mixes 1- and 2-digit prices.",
+      "type": "boundary",
+      "priority": "P1",
+      "technique": "Boundary value analysis ($9.99 vs $49.99)",
+      "tags": [
+        "sorting"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "select",
+          "target": {
+            "testId": "product-sort-container"
+          },
+          "value": "hilo"
+        },
+        {
+          "action": "expectSorted",
+          "target": {
+            "testId": "inventory-item-price"
+          },
+          "order": "desc",
+          "by": "number"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "inventory-item-price",
+            "nth": 0
+          },
+          "text": "$49.99",
+          "exact": true
+        }
+      ],
+      "expectedResult": "Most expensive item ($49.99) first; prices descend.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-INVENTORY-006",
+      "title": "Add a product updates the cart badge",
+      "objective": "Cart badge reflects additions.",
+      "type": "functional",
+      "priority": "P0",
+      "technique": "State transition (empty → 1 item)",
+      "tags": [
+        "cart",
+        "smoke"
+      ],
+      "preconditions": [
+        "Logged in as standard_user",
+        "Cart is empty"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "expectHidden",
+          "target": {
+            "testId": "shopping-cart-badge"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "shopping-cart-badge"
+          },
+          "text": "1",
+          "exact": true
+        },
+        {
+          "action": "expectVisible",
+          "target": {
+            "testId": "remove-sauce-labs-backpack"
+          }
+        }
+      ],
+      "expectedResult": "Badge shows 1; button switches to Remove.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-INVENTORY-007",
+      "title": "Remove a product clears the cart badge",
+      "objective": "Cart badge reflects removals.",
+      "type": "state-transition",
+      "priority": "P1",
+      "technique": "State transition (1 item → empty)",
+      "tags": [
+        "cart"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "remove-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "expectHidden",
+          "target": {
+            "testId": "shopping-cart-badge"
+          }
+        },
+        {
+          "action": "expectVisible",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        }
+      ],
+      "expectedResult": "Badge disappears; button reverts to Add to cart.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-INVENTORY-008",
+      "title": "Badge counts multiple products",
+      "objective": "Badge counts distinct items.",
+      "type": "functional",
+      "priority": "P2",
+      "technique": "Equivalence partitioning (many items)",
+      "tags": [
+        "cart"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-backpack"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-bike-light"
+          }
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "add-to-cart-sauce-labs-onesie"
+          }
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "shopping-cart-badge"
+          },
+          "text": "3",
+          "exact": true
+        }
+      ],
+      "expectedResult": "Badge shows 3.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    },
+    {
+      "id": "TC-INVENTORY-009",
+      "title": "Open product details and go back",
+      "objective": "Product detail navigation round-trip.",
+      "type": "functional",
+      "priority": "P1",
+      "technique": "Use-case testing",
+      "tags": [
+        "navigation"
+      ],
+      "preconditions": [
+        "Logged in as standard_user"
+      ],
+      "steps": [
+        {
+          "action": "goto",
+          "path": "/inventory.html"
+        },
+        {
+          "action": "click",
+          "target": {
+            "text": "Sauce Labs Backpack",
+            "exact": true
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/inventory-item.html"
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "inventory-item-name"
+          },
+          "text": "Sauce Labs Backpack",
+          "exact": true
+        },
+        {
+          "action": "expectText",
+          "target": {
+            "testId": "inventory-item-price"
+          },
+          "text": "$29.99"
+        },
+        {
+          "action": "click",
+          "target": {
+            "testId": "back-to-products"
+          }
+        },
+        {
+          "action": "expectUrl",
+          "contains": "/inventory.html"
+        }
+      ],
+      "expectedResult": "Detail page shows the backpack at $29.99; Back returns to the list.",
+      "validation": {
+        "status": "not-validated",
+        "attempts": 0
+      }
+    }
+  ]
+}
