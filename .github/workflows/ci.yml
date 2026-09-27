@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      live_module:
+        description: 'Run the live Claude agent on this SauceDemo module (needs ANTHROPIC_API_KEY secret). Leave empty to skip.'
+        required: false
+        default: ''
+
+jobs:
+  agent-offline:
+    name: Agent framework + offline agent run
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Framework self-tests (schema, grounding, codegen, agent loop, healing)
+        run: npm test
+      - name: Run the agent end-to-end on the bundled demo shop (replayed LLM turns)
+        run: npm run demo
+      - name: Execute the generated demo-shop specs
+        run: npm run test:demo-shop
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: offline-report
+          path: |
+            playwright-report/
+            generated/demo-shop/
+
+  saucedemo-suite:
+    name: Generated SauceDemo suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:saucedemo
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: saucedemo-report
+          path: playwright-report/
+
+  live-generation:
+    name: Live agent run (Claude)
+    if: github.event_name == 'workflow_dispatch' && inputs.live_module != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: npm run agent -- generate --site saucedemo --module ${{ inputs.live_module }}
+      - run: npx playwright test --project=saucedemo generated/saucedemo/${{ inputs.live_module }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-${{ inputs.live_module }}
+          path: generated/saucedemo/${{ inputs.live_module }}/
