@@ -1,0 +1,1109 @@
+{
+  "model": "reference-transcript",
+  "recordedAt": "2026-09-26T00:00:00.000Z",
+  "responses": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "I'll start by looking at the sign-in page."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_001",
+          "name": "browser_snapshot",
+          "input": {}
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Submit the empty form to see required-field validation."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_002",
+          "name": "browser_click",
+          "input": {
+            "ref": "e4"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Now username only, to see the password message."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_003",
+          "name": "browser_fill",
+          "input": {
+            "ref": "e2",
+            "value": "demo"
+          }
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_004",
+          "name": "browser_click",
+          "input": {
+            "ref": "e5"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_005",
+          "name": "browser_fill",
+          "input": {
+            "ref": "e3",
+            "value": "wrong-password"
+          }
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_006",
+          "name": "browser_click",
+          "input": {
+            "ref": "e5"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Check the locked account."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_007",
+          "name": "browser_fill",
+          "input": {
+            "ref": "e2",
+            "value": "locked"
+          }
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_008",
+          "name": "browser_fill",
+          "input": {
+            "ref": "e3",
+            "value": "demo123"
+          }
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_009",
+          "name": "browser_click",
+          "input": {
+            "ref": "e5"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Is the products page protected for anonymous users?"
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_010",
+          "name": "browser_navigate",
+          "input": {
+            "path": "/products.html"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Redirected with a message. Now the happy path from a clean state."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_011",
+          "name": "browser_reset",
+          "input": {}
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_012",
+          "name": "browser_fill",
+          "input": {
+            "ref": "e2",
+            "value": "demo"
+          }
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_013",
+          "name": "browser_fill",
+          "input": {
+            "ref": "e3",
+            "value": "demo123"
+          }
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_014",
+          "name": "browser_click",
+          "input": {
+            "ref": "e4"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Logged in; I can see the Products heading and a Log out button. Submitting the design."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_015",
+          "name": "submit_test_cases",
+          "input": {
+            "testCases": [
+              {
+                "id": "TC-LOGIN-001",
+                "title": "Sign in with valid credentials",
+                "objective": "Core happy path: a registered user reaches the product catalogue.",
+                "type": "functional",
+                "priority": "P0",
+                "technique": "Equivalence partitioning (valid class)",
+                "tags": [
+                  "smoke",
+                  "auth"
+                ],
+                "preconditions": [
+                  "User demo/demo123 exists"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "demo"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectUrl",
+                    "contains": "/products.html"
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "testId": "welcome-banner"
+                    }
+                  }
+                ],
+                "expectedResult": "User lands on the Products page."
+              },
+              {
+                "id": "TC-LOGIN-002",
+                "title": "Reject sign-in when username is empty",
+                "objective": "Required-field validation for username.",
+                "type": "negative",
+                "priority": "P1",
+                "technique": "Equivalence partitioning (empty input)",
+                "tags": [
+                  "validation"
+                ],
+                "preconditions": [],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Username is required"
+                  },
+                  {
+                    "action": "expectUrl",
+                    "contains": "localhost:4173/"
+                  }
+                ],
+                "expectedResult": "Error 'Username is required' is shown and the user stays on the sign-in page."
+              },
+              {
+                "id": "TC-LOGIN-003",
+                "title": "Reject sign-in when password is empty",
+                "objective": "Required-field validation for password.",
+                "type": "negative",
+                "priority": "P1",
+                "technique": "Equivalence partitioning (empty input)",
+                "tags": [
+                  "validation"
+                ],
+                "preconditions": [],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "demo"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Password is required"
+                  }
+                ],
+                "expectedResult": "Error 'Password is required' is shown."
+              },
+              {
+                "id": "TC-LOGIN-004",
+                "title": "Reject sign-in with a wrong password",
+                "objective": "Invalid credentials must not authenticate.",
+                "type": "negative",
+                "priority": "P0",
+                "technique": "Equivalence partitioning (invalid class)",
+                "tags": [
+                  "auth"
+                ],
+                "preconditions": [],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "demo"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "wrong-password"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Invalid username or password"
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  }
+                ],
+                "expectedResult": "Generic invalid-credentials error; no session is created."
+              },
+              {
+                "id": "TC-LOGIN-005",
+                "title": "Block sign-in for a locked account",
+                "objective": "Locked accounts cannot sign in and get a specific message.",
+                "type": "negative",
+                "priority": "P1",
+                "technique": "Decision table (valid password \u00d7 locked flag)",
+                "tags": [
+                  "auth"
+                ],
+                "preconditions": [
+                  "User 'locked' is locked"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "locked"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Account is locked"
+                  }
+                ],
+                "expectedResult": "Error explains the account is locked."
+              },
+              {
+                "id": "TC-LOGIN-006",
+                "title": "Do not reveal whether a username exists",
+                "objective": "Unknown users get the same message as wrong passwords (no user enumeration).",
+                "type": "security",
+                "priority": "P2",
+                "technique": "Error guessing",
+                "tags": [
+                  "auth",
+                  "security"
+                ],
+                "preconditions": [],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "ghost-user"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Invalid username or password"
+                  }
+                ],
+                "expectedResult": "Same generic error as TC-LOGIN-004."
+              },
+              {
+                "id": "TC-LOGIN-007",
+                "title": "Redirect anonymous users away from protected pages",
+                "objective": "Protected pages require a session.",
+                "type": "security",
+                "priority": "P0",
+                "technique": "State transition (anonymous \u2192 protected page)",
+                "tags": [
+                  "auth",
+                  "routing"
+                ],
+                "preconditions": [
+                  "No active session"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "expectUrl",
+                    "contains": "error=login-required"
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Please log in to continue"
+                  }
+                ],
+                "expectedResult": "User is sent to sign-in with 'Please log in to continue'."
+              },
+              {
+                "id": "TC-LOGIN-008",
+                "title": "Log out ends the session",
+                "objective": "After logout the protected page is no longer reachable.",
+                "type": "state-transition",
+                "priority": "P1",
+                "technique": "State transition (authenticated \u2192 logged out)",
+                "tags": [
+                  "auth",
+                  "session"
+                ],
+                "preconditions": [
+                  "User demo/demo123 exists"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "demo"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "role": "heading",
+                      "name": "Products"
+                    }
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "logout"
+                    }
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "expectUrl",
+                    "contains": "error=login-required"
+                  }
+                ],
+                "expectedResult": "User returns to sign-in and cannot reach /products.html without logging in again."
+              }
+            ],
+            "coverageSummary": "Covers the happy path, required-field validation for both fields, invalid and unknown credentials (incl. user-enumeration check), locked account, protected-route redirect and logout. Not covered: password masking/visual checks, brute-force throttling (not implemented by the app), keyboard-only sign-in (candidate for an accessibility pass)."
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "welcome-banner does not exist; the Products heading proves the landing page. Resubmitting."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_016",
+          "name": "submit_test_cases",
+          "input": {
+            "testCases": [
+              {
+                "id": "TC-LOGIN-001",
+                "title": "Sign in with valid credentials",
+                "objective": "Core happy path: a registered user reaches the product catalogue.",
+                "type": "functional",
+                "priority": "P0",
+                "technique": "Equivalence partitioning (valid class)",
+                "tags": [
+                  "smoke",
+                  "auth"
+                ],
+                "preconditions": [
+                  "User demo/demo123 exists"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "demo"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectUrl",
+                    "contains": "/products.html"
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "role": "heading",
+                      "name": "Products"
+                    }
+                  }
+                ],
+                "expectedResult": "User lands on the Products page."
+              },
+              {
+                "id": "TC-LOGIN-002",
+                "title": "Reject sign-in when username is empty",
+                "objective": "Required-field validation for username.",
+                "type": "negative",
+                "priority": "P1",
+                "technique": "Equivalence partitioning (empty input)",
+                "tags": [
+                  "validation"
+                ],
+                "preconditions": [],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Username is required"
+                  },
+                  {
+                    "action": "expectUrl",
+                    "contains": "localhost:4173/"
+                  }
+                ],
+                "expectedResult": "Error 'Username is required' is shown and the user stays on the sign-in page."
+              },
+              {
+                "id": "TC-LOGIN-003",
+                "title": "Reject sign-in when password is empty",
+                "objective": "Required-field validation for password.",
+                "type": "negative",
+                "priority": "P1",
+                "technique": "Equivalence partitioning (empty input)",
+                "tags": [
+                  "validation"
+                ],
+                "preconditions": [],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "demo"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Password is required"
+                  }
+                ],
+                "expectedResult": "Error 'Password is required' is shown."
+              },
+              {
+                "id": "TC-LOGIN-004",
+                "title": "Reject sign-in with a wrong password",
+                "objective": "Invalid credentials must not authenticate.",
+                "type": "negative",
+                "priority": "P0",
+                "technique": "Equivalence partitioning (invalid class)",
+                "tags": [
+                  "auth"
+                ],
+                "preconditions": [],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "demo"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "wrong-password"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Invalid username or password"
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  }
+                ],
+                "expectedResult": "Generic invalid-credentials error; no session is created."
+              },
+              {
+                "id": "TC-LOGIN-005",
+                "title": "Block sign-in for a locked account",
+                "objective": "Locked accounts cannot sign in and get a specific message.",
+                "type": "negative",
+                "priority": "P1",
+                "technique": "Decision table (valid password \u00d7 locked flag)",
+                "tags": [
+                  "auth"
+                ],
+                "preconditions": [
+                  "User 'locked' is locked"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "locked"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Account is locked"
+                  }
+                ],
+                "expectedResult": "Error explains the account is locked."
+              },
+              {
+                "id": "TC-LOGIN-006",
+                "title": "Do not reveal whether a username exists",
+                "objective": "Unknown users get the same message as wrong passwords (no user enumeration).",
+                "type": "security",
+                "priority": "P2",
+                "technique": "Error guessing",
+                "tags": [
+                  "auth",
+                  "security"
+                ],
+                "preconditions": [],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "ghost-user"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Invalid username or password"
+                  }
+                ],
+                "expectedResult": "Same generic error as TC-LOGIN-004."
+              },
+              {
+                "id": "TC-LOGIN-007",
+                "title": "Redirect anonymous users away from protected pages",
+                "objective": "Protected pages require a session.",
+                "type": "security",
+                "priority": "P0",
+                "technique": "State transition (anonymous \u2192 protected page)",
+                "tags": [
+                  "auth",
+                  "routing"
+                ],
+                "preconditions": [
+                  "No active session"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "expectUrl",
+                    "contains": "error=login-required"
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "login-error"
+                    },
+                    "text": "Please log in to continue"
+                  }
+                ],
+                "expectedResult": "User is sent to sign-in with 'Please log in to continue'."
+              },
+              {
+                "id": "TC-LOGIN-008",
+                "title": "Log out ends the session",
+                "objective": "After logout the protected page is no longer reachable.",
+                "type": "state-transition",
+                "priority": "P1",
+                "technique": "State transition (authenticated \u2192 logged out)",
+                "tags": [
+                  "auth",
+                  "session"
+                ],
+                "preconditions": [
+                  "User demo/demo123 exists"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "username"
+                    },
+                    "value": "demo"
+                  },
+                  {
+                    "action": "fill",
+                    "target": {
+                      "testId": "password"
+                    },
+                    "value": "demo123"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "role": "heading",
+                      "name": "Products"
+                    }
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "logout"
+                    }
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "testId": "login-button"
+                    }
+                  },
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "expectUrl",
+                    "contains": "error=login-required"
+                  }
+                ],
+                "expectedResult": "User returns to sign-in and cannot reach /products.html without logging in again."
+              }
+            ],
+            "coverageSummary": "Covers the happy path, required-field validation for both fields, invalid and unknown credentials (incl. user-enumeration check), locked account, protected-route redirect and logout. Not covered: password masking/visual checks, brute-force throttling (not implemented by the app), keyboard-only sign-in (candidate for an accessibility pass)."
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The page shows 'This account is locked'. The expectation used a different wording and is case-sensitive, so the test is wrong, not the app."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_017",
+          "name": "fix_test_case",
+          "input": {
+            "testCase": {
+              "id": "TC-LOGIN-005",
+              "title": "Block sign-in for a locked account",
+              "objective": "Locked accounts cannot sign in and get a specific message.",
+              "type": "negative",
+              "priority": "P1",
+              "technique": "Decision table (valid password \u00d7 locked flag)",
+              "tags": [
+                "auth"
+              ],
+              "preconditions": [
+                "User 'locked' is locked"
+              ],
+              "steps": [
+                {
+                  "action": "goto",
+                  "path": "/"
+                },
+                {
+                  "action": "fill",
+                  "target": {
+                    "testId": "username"
+                  },
+                  "value": "locked"
+                },
+                {
+                  "action": "fill",
+                  "target": {
+                    "testId": "password"
+                  },
+                  "value": "demo123"
+                },
+                {
+                  "action": "click",
+                  "target": {
+                    "testId": "login-button"
+                  }
+                },
+                {
+                  "action": "expectText",
+                  "target": {
+                    "testId": "login-error"
+                  },
+                  "text": "This account is locked"
+                }
+              ],
+              "expectedResult": "Error explains the account is locked."
+            },
+            "rationale": "Expected text did not match the real message; updated to 'This account is locked' observed on the page."
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+"ID","Title","Module","Type","Priority","Technique","Preconditions","Steps","Expected Result","Tags","Automation Status"
+"TC-LOGIN-001","Sign in with valid credentials","login","functional","P0","Equivalence partitioning (valid class)","User demo/demo123 exists","1. Open /
+2. Enter ""demo"" in [username]
+3. Enter ""demo123"" in [password]
+4. Click [login-button] => The URL contains ""/products.html""; The ""Products"" heading is visible","User lands on the Products page.","smoke, auth","validated"
+"TC-LOGIN-002","Reject sign-in when username is empty","login","negative","P1","Equivalence partitioning (empty input)","","1. Open /
+2. Enter ""demo123"" in [password]
+3. Click [login-button] => [login-error] contains ""Username is required""; The URL contains ""localhost:4173/""","Error 'Username is required' is shown and the user stays on the sign-in page.","validation","validated"
+"TC-LOGIN-003","Reject sign-in when password is empty","login","negative","P1","Equivalence partitioning (empty input)","","1. Open /
+2. Enter ""demo"" in [username]
+3. Click [login-button] => [login-error] contains ""Password is required""","Error 'Password is required' is shown.","validation","validated"
+"TC-LOGIN-004","Reject sign-in with a wrong password","login","negative","P0","Equivalence partitioning (invalid class)","","1. Open /
+2. Enter ""demo"" in [username]
+3. Enter ""wrong-password"" in [password]
+4. Click [login-button] => [login-error] contains ""Invalid username or password""; [login-button] is visible","Generic invalid-credentials error; no session is created.","auth","validated"
+"TC-LOGIN-005","Block sign-in for a locked account","login","negative","P1","Decision table (valid password × locked flag)","User 'locked' is locked","1. Open /
+2. Enter ""locked"" in [username]
+3. Enter ""demo123"" in [password]
+4. Click [login-button] => [login-error] contains ""This account is locked""","Error explains the account is locked.","auth","healed"
+"TC-LOGIN-006","Do not reveal whether a username exists","login","security","P2","Error guessing","","1. Open /
+2. Enter ""ghost-user"" in [username]
+3. Enter ""demo123"" in [password]
+4. Click [login-button] => [login-error] contains ""Invalid username or password""","Same generic error as TC-LOGIN-004.","auth, security","validated"
+"TC-LOGIN-007","Redirect anonymous users away from protected pages","login","security","P0","State transition (anonymous → protected page)","No active session","1. Open /products.html => The URL contains ""error=login-required""; [login-error] contains ""Please log in to continue""","User is sent to sign-in with 'Please log in to continue'.","auth, routing","validated"
+"TC-LOGIN-008","Log out ends the session","login","state-transition","P1","State transition (authenticated → logged out)","User demo/demo123 exists","1. Open /
+2. Enter ""demo"" in [username]
+3. Enter ""demo123"" in [password]
+4. Click [login-button] => The ""Products"" heading is visible
+5. Click [logout] => [login-button] is visible
+6. Open /products.html => The URL contains ""error=login-required""","User returns to sign-in and cannot reach /products.html without logging in again.","auth, session","validated"

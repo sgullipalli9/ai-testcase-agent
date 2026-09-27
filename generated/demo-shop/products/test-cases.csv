@@ -1,0 +1,18 @@
+"ID","Title","Module","Type","Priority","Technique","Preconditions","Steps","Expected Result","Tags","Automation Status"
+"TC-PRODUCTS-001","Show every product with a name and a price","products","functional","P0","Equivalence partitioning","Signed in as demo","1. Open /products.html => The ""Products"" heading is visible; 5 × [product-name] are shown; 5 × [product-price] are shown","5 products, each with a price.","smoke, catalogue","validated"
+"TC-PRODUCTS-002","Default order is name A to Z","products","functional","P2","Equivalence partitioning","Signed in as demo","1. Open /products.html => [sort] has value ""name-asc""; [product-name] are sorted by name (ascending)","Products are alphabetical.","sorting","validated"
+"TC-PRODUCTS-003","Sort by name Z to A","products","functional","P2","Equivalence partitioning (each sort option)","Signed in as demo","1. Open /products.html
+2. Select ""name-desc"" in [sort] => [product-name] are sorted by name (descending)","Products are reverse-alphabetical.","sorting","validated"
+"TC-PRODUCTS-004","Sort by price low to high","products","functional","P1","Equivalence partitioning (each sort option)","Signed in as demo","1. Open /products.html
+2. Select ""price-asc"" in [sort] => [product-price] are sorted by value (ascending)","Cheapest product first.","sorting","validated"
+"TC-PRODUCTS-005","Sort by price high to low","products","boundary","P1","Boundary value analysis (1- vs 2-digit prices)","Signed in as demo","1. Open /products.html
+2. Select ""price-desc"" in [sort] => [product-price] are sorted by value (descending)","Most expensive product first, cheapest last.","sorting","suspected-defect"
+"TC-PRODUCTS-006","Adding a product shows it in the cart badge","products","functional","P0","State transition (empty cart → 1 item)","Signed in as demo","1. Open /products.html => [cart-count] is not displayed
+2. Click [add-water-bottle] => [cart-count] reads ""1""; [remove-water-bottle] is visible","Badge shows 1 and the button switches to Remove.","cart, smoke","validated"
+"TC-PRODUCTS-007","Removing the last product hides the cart badge","products","state-transition","P1","State transition (1 item → empty cart)","Signed in as demo","1. Open /products.html
+2. Click [add-water-bottle]
+3. Click [remove-water-bottle] => [cart-count] is not displayed; [add-water-bottle] is visible","Badge disappears and the button reverts to Add to cart.","cart","validated"
+"TC-PRODUCTS-008","Cart badge persists across page reloads","products","functional","P2","State transition","Signed in as demo","1. Open /products.html
+2. Click [add-water-bottle]
+3. Click [add-backpack] => [cart-count] reads ""2""
+4. Open /products.html => [cart-count] reads ""2""","Badge still shows 2 after reload.","cart","validated"

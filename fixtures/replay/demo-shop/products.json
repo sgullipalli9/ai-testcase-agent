@@ -1,0 +1,501 @@
+{
+  "model": "reference-transcript",
+  "recordedAt": "2026-09-26T00:00:00.000Z",
+  "responses": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Taking a snapshot of the catalogue."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_018",
+          "name": "browser_snapshot",
+          "input": {}
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Trying the price sorts."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_019",
+          "name": "browser_select",
+          "input": {
+            "ref": "e4",
+            "value": "price-asc"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_020",
+          "name": "browser_select",
+          "input": {
+            "ref": "e4",
+            "value": "price-desc"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Now add an item to see the cart badge."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_021",
+          "name": "browser_click",
+          "input": {
+            "ref": "e17"
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The badge shows 1 and Water Bottle now has a Remove button. Remove it again."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_022",
+          "name": "browser_snapshot",
+          "input": {}
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_023",
+          "name": "browser_reset",
+          "input": {}
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_024",
+          "name": "submit_test_cases",
+          "input": {
+            "testCases": [
+              {
+                "id": "TC-PRODUCTS-001",
+                "title": "Show every product with a name and a price",
+                "objective": "Catalogue renders completely.",
+                "type": "functional",
+                "priority": "P0",
+                "technique": "Equivalence partitioning",
+                "tags": [
+                  "smoke",
+                  "catalogue"
+                ],
+                "preconditions": [
+                  "Signed in as demo"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "role": "heading",
+                      "name": "Products"
+                    }
+                  },
+                  {
+                    "action": "expectCount",
+                    "target": {
+                      "testId": "product-name"
+                    },
+                    "count": 5
+                  },
+                  {
+                    "action": "expectCount",
+                    "target": {
+                      "testId": "product-price"
+                    },
+                    "count": 5
+                  }
+                ],
+                "expectedResult": "5 products, each with a price."
+              },
+              {
+                "id": "TC-PRODUCTS-002",
+                "title": "Default order is name A to Z",
+                "objective": "Default sort is predictable.",
+                "type": "functional",
+                "priority": "P2",
+                "technique": "Equivalence partitioning",
+                "tags": [
+                  "sorting"
+                ],
+                "preconditions": [
+                  "Signed in as demo"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "expectValue",
+                    "target": {
+                      "testId": "sort"
+                    },
+                    "value": "name-asc"
+                  },
+                  {
+                    "action": "expectSorted",
+                    "target": {
+                      "testId": "product-name"
+                    },
+                    "order": "asc",
+                    "by": "text"
+                  }
+                ],
+                "expectedResult": "Products are alphabetical."
+              },
+              {
+                "id": "TC-PRODUCTS-003",
+                "title": "Sort by name Z to A",
+                "objective": "Name sort descending.",
+                "type": "functional",
+                "priority": "P2",
+                "technique": "Equivalence partitioning (each sort option)",
+                "tags": [
+                  "sorting"
+                ],
+                "preconditions": [
+                  "Signed in as demo"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "select",
+                    "target": {
+                      "testId": "sort"
+                    },
+                    "value": "name-desc"
+                  },
+                  {
+                    "action": "expectSorted",
+                    "target": {
+                      "testId": "product-name"
+                    },
+                    "order": "desc",
+                    "by": "text"
+                  }
+                ],
+                "expectedResult": "Products are reverse-alphabetical."
+              },
+              {
+                "id": "TC-PRODUCTS-004",
+                "title": "Sort by price low to high",
+                "objective": "Numeric price sort ascending.",
+                "type": "functional",
+                "priority": "P1",
+                "technique": "Equivalence partitioning (each sort option)",
+                "tags": [
+                  "sorting"
+                ],
+                "preconditions": [
+                  "Signed in as demo"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "select",
+                    "target": {
+                      "testId": "sort"
+                    },
+                    "value": "price-asc"
+                  },
+                  {
+                    "action": "expectSorted",
+                    "target": {
+                      "testId": "product-price"
+                    },
+                    "order": "asc",
+                    "by": "number"
+                  }
+                ],
+                "expectedResult": "Cheapest product first."
+              },
+              {
+                "id": "TC-PRODUCTS-005",
+                "title": "Sort by price high to low",
+                "objective": "Numeric price sort descending; prices with different digit counts ($4.99 vs $49.99) expose string-vs-number sorting.",
+                "type": "boundary",
+                "priority": "P1",
+                "technique": "Boundary value analysis (1- vs 2-digit prices)",
+                "tags": [
+                  "sorting"
+                ],
+                "preconditions": [
+                  "Signed in as demo"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "select",
+                    "target": {
+                      "testId": "sort"
+                    },
+                    "value": "price-desc"
+                  },
+                  {
+                    "action": "expectSorted",
+                    "target": {
+                      "testId": "product-price"
+                    },
+                    "order": "desc",
+                    "by": "number"
+                  }
+                ],
+                "expectedResult": "Most expensive product first, cheapest last."
+              },
+              {
+                "id": "TC-PRODUCTS-006",
+                "title": "Adding a product shows it in the cart badge",
+                "objective": "Cart badge reflects additions.",
+                "type": "functional",
+                "priority": "P0",
+                "technique": "State transition (empty cart \u2192 1 item)",
+                "tags": [
+                  "cart",
+                  "smoke"
+                ],
+                "preconditions": [
+                  "Signed in as demo"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "expectHidden",
+                    "target": {
+                      "testId": "cart-count"
+                    }
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "add-water-bottle"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "cart-count"
+                    },
+                    "text": "1",
+                    "exact": true
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "testId": "remove-water-bottle"
+                    }
+                  }
+                ],
+                "expectedResult": "Badge shows 1 and the button switches to Remove."
+              },
+              {
+                "id": "TC-PRODUCTS-007",
+                "title": "Removing the last product hides the cart badge",
+                "objective": "Cart badge reflects removals.",
+                "type": "state-transition",
+                "priority": "P1",
+                "technique": "State transition (1 item \u2192 empty cart)",
+                "tags": [
+                  "cart"
+                ],
+                "preconditions": [
+                  "Signed in as demo"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "add-water-bottle"
+                    }
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "remove-water-bottle"
+                    }
+                  },
+                  {
+                    "action": "expectHidden",
+                    "target": {
+                      "testId": "cart-count"
+                    }
+                  },
+                  {
+                    "action": "expectVisible",
+                    "target": {
+                      "testId": "add-water-bottle"
+                    }
+                  }
+                ],
+                "expectedResult": "Badge disappears and the button reverts to Add to cart."
+              },
+              {
+                "id": "TC-PRODUCTS-008",
+                "title": "Cart badge persists across page reloads",
+                "objective": "Cart state survives navigation.",
+                "type": "functional",
+                "priority": "P2",
+                "technique": "State transition",
+                "tags": [
+                  "cart"
+                ],
+                "preconditions": [
+                  "Signed in as demo"
+                ],
+                "steps": [
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "add-water-bottle"
+                    }
+                  },
+                  {
+                    "action": "click",
+                    "target": {
+                      "testId": "add-backpack"
+                    }
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "cart-count"
+                    },
+                    "text": "2",
+                    "exact": true
+                  },
+                  {
+                    "action": "goto",
+                    "path": "/products.html"
+                  },
+                  {
+                    "action": "expectText",
+                    "target": {
+                      "testId": "cart-count"
+                    },
+                    "text": "2",
+                    "exact": true
+                  }
+                ],
+                "expectedResult": "Badge still shows 2 after reload."
+              }
+            ],
+            "coverageSummary": "Covers catalogue rendering, all four sort options (with a boundary check on 1- vs 2-digit prices), and cart badge add/remove/persistence. Not covered here: cart page contents and checkout (separate module), images, responsive layout."
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Values are ['$49.99','$4.99','$34.00',...]: $4.99 is second. That is lexicographic ordering of price strings \u2014 the app is wrong, the test is right."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_demo_025",
+          "name": "flag_suspected_defect",
+          "input": {
+            "rationale": "'Price (high to low)' orders prices as strings: $4.99 appears right after $49.99. Expected numeric descending order."
+          }
+        }
+      ],
+      "stopReason": "tool_use",
+      "usage": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cacheReadTokens": 0
+      }
+    }
+  ]
+}

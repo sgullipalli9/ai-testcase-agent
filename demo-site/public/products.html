@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Mini Mart — Products</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header>
+  <strong>Mini Mart</strong>
+  <nav>
+    <a href="/cart.html" data-testid="cart-link">Cart<span class="badge" data-testid="cart-count" hidden>0</span></a>
+    <button data-testid="logout">Log out</button>
+  </nav>
+</header>
+<main>
+  <h1>Products</h1>
+  <label for="sort">Sort by</label>
+  <select id="sort" data-testid="sort">
+    <option value="name-asc">Name (A to Z)</option>
+    <option value="name-desc">Name (Z to A)</option>
+    <option value="price-asc">Price (low to high)</option>
+    <option value="price-desc">Price (high to low)</option>
+  </select>
+  <ul data-testid="product-list"></ul>
+</main>
+<script type="module">import { productsPage } from '/app.js'; productsPage();</script>
+</body>
+</html>

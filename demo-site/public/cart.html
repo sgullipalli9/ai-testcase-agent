@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Mini Mart — Cart</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header>
+  <strong>Mini Mart</strong>
+  <nav>
+    <a href="/products.html" data-testid="continue-shopping">Continue shopping</a>
+    <a href="/cart.html" data-testid="cart-link">Cart<span class="badge" data-testid="cart-count" hidden>0</span></a>
+    <button data-testid="logout">Log out</button>
+  </nav>
+</header>
+<main>
+  <h1>Your cart</h1>
+  <ul data-testid="cart-items"></ul>
+  <p data-testid="cart-total"></p>
+  <h2>Checkout</h2>
+  <form novalidate>
+    <label for="fullName">Full name</label>
+    <input id="fullName" data-testid="full-name">
+    <label for="zip">ZIP code</label>
+    <input id="zip" data-testid="zip" inputmode="numeric">
+    <p class="error" role="alert" data-testid="checkout-error" hidden></p>
+    <button type="submit" data-testid="place-order">Place order</button>
+  </form>
+</main>
+<script type="module">import { cartPage } from '/app.js'; cartPage();</script>
+</body>
+</html>
