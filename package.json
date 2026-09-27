@@ -1,0 +1,28 @@
+{
+  "name": "ai-testcase-agent",
+  "version": "1.0.0",
+  "description": "An autonomous AI agent (Claude + Playwright) that explores a web module, designs test cases, validates them in a real browser, self-heals broken ones, and emits Playwright specs plus manual test cases.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Satish Gullipalli",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "agent": "npm run build --silent && node dist/src/cli.js",
+    "demo": "npm run build --silent && node dist/src/cli.js generate --site demo-shop --module all --llm replay",
+    "render": "npm run build --silent && node dist/src/cli.js render",
+    "demo-site": "node demo-site/server.mjs",
+    "test": "playwright test --project=self-tests",
+    "test:demo-shop": "playwright test --project=demo-shop",
+    "test:saucedemo": "playwright test --project=saucedemo",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.9.2"
+  }
+}
